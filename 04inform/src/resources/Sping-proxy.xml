@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--0.1.我们需要知道给那些目标对象组织增强
+        0.2 需要配置的目标对象
+        0.3 需要配置增强 通知-->
+    <bean id="UserDao" class="Sping.dao.UserDaoImpl"/>
+    <bean id="UserserviceImpl" class="Sping.service.UserserviceImpl">
+        <property name="dao" ref="UserDao"/>
+    </bean>
+    <bean id="UserserviceImpl2" class="Sping.service.UserserviceImpl">
+        <property name="dao" ref="UserDao"/>
+    </bean>
+    <!--配置的各种通知-->
+    <!--配置前置通知-->
+    <bean id="BeforAdvice" class="Sping.advice.MyBeforAdvice"/>
+
+
+    <!--配置代理生成器 给指定的目标对象  注入-->
+    <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="beanNames">
+            <array>
+                <value>UserserviceImpl</value>
+                <value>UserserviceImpl2</value>
+            </array>
+        </property>
+        <!--设置顾问-->
+        <property name="interceptorNames">
+            <array>
+                <value>myAdvisor</value>
+            </array>
+        </property>
+    </bean>
+
+    <bean id="myAdvisor" class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor">
+
+        <!--配置通知-->
+        <property name="advice" ref="BeforAdvice"/>
+        <property name="mappedNames">
+            <array>
+                <value>eat</value>
+                <value>drink</value>
+            </array>
+        </property>
+
+    </bean>
+</beans>

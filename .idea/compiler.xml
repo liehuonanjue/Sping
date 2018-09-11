@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="02jdbc" />
+        <module name="03agency" />
+        <module name="04inform" />
+        <module name="05AspectJ" />
+        <module name="setUp" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="02jdbc" target="1.7" />
+      <module name="03agency" target="1.7" />
+      <module name="04inform" target="1.7" />
+      <module name="05AspectJ" target="1.7" />
+      <module name="setUp" target="1.7" />
+      <module name="Sping" target="1.7" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

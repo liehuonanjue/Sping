@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--配置UserDao-->
+    <bean id="Userdao" class="dao.UserImpl" />
+    <!--配置Userservice-->
+    <bean id="Userservice" class="service.UserserviceImpl">
+        <property name="userdao" ref="Userdao"></property>
+    </bean>
+
+    <!-- 验证作用域
+     scope="singleton" 默认的就是单例
+     prototype:原型
+    -->
+    <bean id="user0" class="pojo.User" scope="singleton"/>
+
+    <!--reg :对非基本数据类型使用
+    value：对基本数据类型使用-->
+    <!--属性赋值:方式1-->
+    <bean id="user1" class="pojo.User">
+        <property name="stuid" value="1"/>
+        <property name="stuname" value="zhang"/>
+    </bean>
+    <!--属性赋值：方式2-->
+    <bean id="user2" class="pojo.User" p:stuid="12" p:stuname="22d"/>
+
+    <!--构造赋值：方式1-->
+    <bean id="user3" class="pojo.User">
+        <constructor-arg name="stuid" value="1"/>
+        <constructor-arg name="stuname" value="22s"/>
+        <!--
+        下标形式
+         <constructor-arg  index="0" value="1"/>
+         <constructor-arg index="1" value="22s"/>-->
+    </bean>
+    <!--构造赋值：方式2-->
+    <bean id="user4" class="pojo.User" c:stuid="1" c:stuname="22222"/>
+
+    <bean id="user5" class="pojo.User">
+        <property name="stuid" value="1"/>
+        <property name="stuname" value="zhang"/>
+        <property name="student">
+            <bean id="student" class="pojo.Student">
+                <property name="stuname" value="zhang"/>
+                <property name="stuid" value="1"/>
+            </bean>
+        </property>
+        <property name="ints">
+            <array>
+                <value>1</value>
+                <value>2</value>
+                <value>3</value>
+            </array>
+        </property>
+        <property name="list">
+            <list>
+                <value>1</value>
+                <value>2</value>
+                <value>3</value>
+            </list>
+        </property>
+        <property name="set">
+            <set>
+                <value>1</value>
+                <value>2</value>
+                <value>3</value>
+            </set>
+        </property>
+        <property name="map">
+            <map>
+                <entry key="1" value="a"/>
+                <entry key="2" value="b"/>
+                <entry key="3" value="c"/>
+            </map>
+        </property>
+        <property name="properties">
+            <props>
+                <prop key="1">1</prop>
+                <prop key="2">2</prop>
+                <prop key="3">3</prop>
+
+
+            </props>
+        </property>
+    </bean>
+
+</beans>
